@@ -4,7 +4,7 @@ const parser = require("cheerio");
 const cheerio = require("cheerio");
 const _ = require("lodash");
 const tramInfo = function(req, res, next) {
-  //   console.log(JSON.stringify(req.body, null, 4));
+  console.log(JSON.stringify(req.body, null, 4));
 
   const stationUrl =
     "http://mobil.bvg.de/Fahrinfo/bin/stboard.bin/dox?input=" +
@@ -17,7 +17,7 @@ const tramInfo = function(req, res, next) {
       return extractResults(html);
     })
     .then(trams => {
-      return _.slice(trams, 3);
+      return _.take(trams, 2);
     })
     .then(results => {
       const responseString = makeResponse(results);
@@ -69,7 +69,7 @@ const makeResponse = nextTrams => {
       tram.destination
     }`;
   });
-  const finalResponse = responseArray.join(", as well ");
+  const finalResponse = responseArray.join(", also ");
 
   return finalResponse;
 };
